@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+
+{% block content %}
+<main class="main-content results-page">
+    <!-- Header -->
+    <section class="results-header" id="results-header">
+        <div class="results-header-content">
+            <a href="/" class="back-link" id="back-link">← Check Another Resume</a>
+            <h1 class="results-title">Your Results</h1>
+            <p class="results-filename" id="results-filename"></p>
+        </div>
+    </section>
+
+    <!-- Score Overview -->
+    <section class="score-overview" id="score-overview">
+        <div class="glass-card score-main-card">
+            <div class="score-gauge-wrapper">
+                <div class="score-gauge" id="score-gauge">
+                    <svg class="gauge-svg" viewBox="0 0 200 200">
+                        <circle class="gauge-bg" cx="100" cy="100" r="85" />
+                        <circle class="gauge-fill" id="gauge-fill" cx="100" cy="100" r="85" />
+                    </svg>
+                    <div class="gauge-center">
+                        <span class="gauge-score" id="gauge-score">0</span>
+                        <span class="gauge-label" id="gauge-label">ATS Score</span>
+                    </div>
+                </div>
+                <p class="score-verdict" id="score-verdict"></p>
+            </div>
+
+            <!-- Dimension Scores -->
+            <div class="dimension-grid" id="dimension-grid">
+                <!-- Filled by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Keyword Analysis -->
+    <section class="analysis-section" id="keyword-section">
+        <div class="glass-card">
+            <div class="card-header">
+                <span class="card-icon">🔑</span>
+                <h2 class="card-title">Keyword Analysis</h2>
+                <div class="keyword-stats" id="keyword-stats"></div>
+            </div>
+            <div class="keyword-columns">
+                <div class="keyword-col">
+                    <h3 class="keyword-col-title matched-title">✅ Matched Keywords</h3>
+                    <div class="keyword-pills" id="matched-keywords"></div>
+                </div>
+                <div class="keyword-col">
+                    <h3 class="keyword-col-title missing-title">❌ Missing Keywords</h3>
+                    <div class="keyword-pills" id="missing-keywords"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills -->
+    <section class="analysis-section" id="skills-section">
+        <div class="glass-card">
+            <div class="card-header">
+                <span class="card-icon">🎯</span>
+                <h2 class="card-title">Skills Analysis</h2>
+                <div class="skills-stats" id="skills-stats"></div>
+            </div>
+            <div class="skills-columns">
+                <div class="skills-col">
+                    <h3 class="keyword-col-title matched-title">✅ Matched Skills (<span id="matched-skills-count">0</span>)</h3>
+                    <div class="keyword-pills" id="matched-skills"></div>
+                </div>
+                <div class="skills-col">
+                    <h3 class="keyword-col-title missing-title">❌ Missing Skills (<span id="missing-skills-count">0</span>)</h3>
+                    <div class="keyword-pills" id="missing-skills"></div>
+                </div>
+                <div class="skills-col">
+                    <h3 class="keyword-col-title extra-title">⭐ Extra Skills (<span id="extra-skills-count">0</span>)</h3>
+                    <div class="keyword-pills" id="extra-skills"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Formatting Checks -->
+    <section class="analysis-section" id="formatting-section">
+        <div class="glass-card">
+            <div class="card-header">
+                <span class="card-icon">📋</span>
+                <h2 class="card-title">ATS Formatting Checks</h2>
+            </div>
+            <div class="checks-list" id="formatting-checks"></div>
+        </div>
+    </section>
+
+    <!-- Impact Language -->
+    <section class="analysis-section" id="impact-section">
+        <div class="glass-card">
+            <div class="card-header">
+                <span class="card-icon">✍️</span>
+                <h2 class="card-title">Impact Language</h2>
+            </div>
+            <div class="impact-content">
+                <div class="impact-stat-row" id="impact-stats"></div>
+                <div class="impact-verbs" id="impact-verbs"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Suggestions -->
+    <section class="analysis-section" id="suggestions-section">
+        <div class="glass-card">
+            <div class="card-header">
+                <span class="card-icon">💡</span>
+                <h2 class="card-title">Suggestions</h2>
+            </div>
+            <div class="suggestions-list" id="suggestions-list"></div>
+        </div>
+    </section>
+
+    <!-- Actions -->
+    <div class="results-actions">
+        <a href="/" class="btn-analyze btn-secondary" id="btn-reanalyze">
+            <span class="btn-text">
+                <span class="btn-icon">🔄</span>
+                Check Another Resume
+            </span>
+        </a>
+    </div>
+</main>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const data = sessionStorage.getItem('analysisResults');
+        if (!data) {
+            window.location.href = '/';
+            return;
+        }
+        const results = JSON.parse(data);
+        renderResults(results);
+    });
+</script>
+{% endblock %}
