@@ -1,0 +1,12 @@
+Django
+djangorestframework
+djangorestframework-simplejwt
+django-cors-headers
+django-filter
+pdfplumber
+python-docx
+Pillow
+python-multipart
+gunicorn
+whitenoise
+dj-database-url
